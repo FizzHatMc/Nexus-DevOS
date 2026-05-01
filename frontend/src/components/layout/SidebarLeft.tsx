@@ -1,6 +1,6 @@
 "use client";
 
-import { Folder, FileText, Lock, Settings, TerminalSquare, Link as LinkIcon, Plus, X, Bot } from "lucide-react";
+import { Folder, FileText, Lock, Settings, TerminalSquare, Link as LinkIcon, Plus, X, Bot, Globe } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -120,6 +120,7 @@ export function SidebarLeft() {
             Modules
           </div>
           <NavItem href="/projects" icon={<Folder size={16} />} label="Projects" />
+          <NavItem href="/services" icon={<Globe size={16} />} label="Service Hub" />
           <NavItem href="/chat" icon={<Bot size={16} />} label="Knowledge Chat" />
           <NavItem href="/commands" icon={<TerminalSquare size={16} />} label="Command Library" />
           <NavItem href="/vault" icon={<Lock size={16} />} label="The Vault" />

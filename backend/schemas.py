@@ -81,4 +81,21 @@ class CommandResponse(CommandBase):
     class Config:
         from_attributes = True
 
+class ServiceLinkBase(BaseModel):
+    name: str
+    url: str
+    description: Optional[str] = None
+    icon: Optional[str] = None
+    project_id: Optional[str] = None
+
+class ServiceLinkCreate(ServiceLinkBase):
+    pass
+
+class ServiceLinkResponse(ServiceLinkBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
 

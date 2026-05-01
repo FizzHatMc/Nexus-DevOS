@@ -59,3 +59,16 @@ class CommandSnippet(Base):
     tags = Column(String, nullable=True)
     project_id = Column(String, ForeignKey("projects.id"), nullable=True, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class ServiceLink(Base):
+    """Service Hub Links."""
+    __tablename__ = "service_links"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    url = Column(String) # e.g., "http://192.168.1.100:8080"
+    description = Column(Text, nullable=True)
+    icon = Column(String, nullable=True) # Optional icon identifier
+    project_id = Column(String, ForeignKey("projects.id"), nullable=True, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
