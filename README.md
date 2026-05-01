@@ -38,7 +38,7 @@ uvicorn main:app --reload
 *The backend API will run on `http://localhost:8000`. You can view the auto-generated Swagger documentation at `http://localhost:8000/docs`.*
 
 ### 2. Frontend (Next.js 14 + Tailwind CSS)
-Requires Node.js 18+
+Requires Node.js 20+
 \`\`\`bash
 cd frontend
 
