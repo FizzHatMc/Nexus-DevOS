@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexus-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - nexus-data:/data
+    environment:
+      - NEXUS_DATA_DIR=/data
+      - NEXUS_NOTES_DIR=/data/notes
+      - NEXUS_VAULT_KEY=${NEXUS_VAULT_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nexus-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  nexus-data:
