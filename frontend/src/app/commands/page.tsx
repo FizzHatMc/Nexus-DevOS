@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState, useEffect } from "react";
 import { TerminalSquare, Copy, Check, Trash2, Plus } from "lucide-react";
@@ -25,8 +28,8 @@ export default function Commands() {
 
   const fetchCommands = () => {
     const url = activeProject 
-      ? `http://localhost:8000/commands/?project_id=${activeProject.id}` 
-      : "http://localhost:8000/commands/";
+      ? `${API_URL}/commands/?project_id=${activeProject.id}` 
+      : `${API_URL}/commands/`;
     fetch(url)
       .then(res => res.json())
       .then(data => setCommands(data))
@@ -39,7 +42,7 @@ export default function Commands() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:8000/commands/", {
+    await fetch(`${API_URL}/commands/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
@@ -57,7 +60,7 @@ export default function Commands() {
   };
 
   const handleDelete = async (id: number) => {
-    await fetch(`http://localhost:8000/commands/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/commands/${id}`, { method: "DELETE" });
     fetchCommands();
   };
 

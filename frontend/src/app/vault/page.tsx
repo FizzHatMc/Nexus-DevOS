@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState, useEffect } from "react";
 import { Lock, Eye, EyeOff, Trash2, Copy, Check } from "lucide-react";
@@ -22,8 +25,8 @@ export default function Vault() {
 
   const fetchSecrets = () => {
     const url = activeProject 
-      ? `http://localhost:8000/vault/?project_id=${activeProject.id}` 
-      : "http://localhost:8000/vault/";
+      ? `${API_URL}/vault/?project_id=${activeProject.id}` 
+      : `${API_URL}/vault/`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setSecrets(data))
@@ -36,7 +39,7 @@ export default function Vault() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:8000/vault/", {
+    await fetch(`${API_URL}/vault/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
@@ -61,7 +64,7 @@ export default function Vault() {
       });
       return;
     }
-    const res = await fetch(`http://localhost:8000/vault/${id}/reveal`);
+    const res = await fetch(`${API_URL}/vault/${id}/reveal`);
     const data = await res.json();
     setRevealed(prev => ({ ...prev, [id]: data.value }));
   };
@@ -69,7 +72,7 @@ export default function Vault() {
   const handleCopy = async (id: number) => {
     let valToCopy = revealed[id];
     if (!valToCopy) {
-      const res = await fetch(`http://localhost:8000/vault/${id}/reveal`);
+      const res = await fetch(`${API_URL}/vault/${id}/reveal`);
       const data = await res.json();
       valToCopy = data.value;
     }
@@ -79,7 +82,7 @@ export default function Vault() {
   };
 
   const handleDelete = async (id: number) => {
-    await fetch(`http://localhost:8000/vault/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/vault/${id}`, { method: "DELETE" });
     fetchSecrets();
   };
 

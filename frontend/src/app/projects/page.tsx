@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState, useEffect } from "react";
 import { Folder, Plus, GitBranch, Trash2 } from "lucide-react";
@@ -22,7 +25,7 @@ export default function Projects() {
   const router = useRouter();
 
   const fetchProjects = () => {
-    fetch("http://localhost:8000/projects/")
+    fetch(`${API_URL}/projects/`)
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(e => console.error(e));
@@ -34,7 +37,7 @@ export default function Projects() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:8000/projects/", {
+    await fetch(`${API_URL}/projects/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: newId, name: newName, description: newDesc, github_repo: newRepo })
@@ -47,7 +50,7 @@ export default function Projects() {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`http://localhost:8000/projects/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/projects/${id}`, { method: "DELETE" });
     fetchProjects();
   };
 

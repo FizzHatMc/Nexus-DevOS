@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { Folder, FileText, Lock, Settings, TerminalSquare, Link as LinkIcon, Plus, X, Bot, Globe } from "lucide-react";
 import Link from "next/link";
@@ -15,8 +18,8 @@ export function SidebarLeft() {
 
   const fetchNotes = () => {
     const url = activeProject 
-      ? `http://localhost:8000/notes/?project_id=${activeProject.id}` 
-      : "http://localhost:8000/notes/";
+      ? `${API_URL}/notes/?project_id=${activeProject.id}` 
+      : `${API_URL}/notes/`;
     fetch(url)
       .then(res => res.json())
       .then(data => setNotes(data))
@@ -32,7 +35,7 @@ export function SidebarLeft() {
     if (!snapUrl) return;
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/snapshots/", {
+      const res = await fetch(`${API_URL}/snapshots/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // TODO: The backend snapshots router currently doesn't accept project_id. 

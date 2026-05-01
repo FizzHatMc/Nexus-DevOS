@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState } from "react";
 import { MessageSquare, Database, Send, Bot } from "lucide-react";
@@ -15,7 +18,7 @@ export default function Chat() {
   const handleIndex = async () => {
     setIndexing(true);
     try {
-      const res = await fetch("http://localhost:8000/rag/index", { method: "POST" });
+      const res = await fetch(`${API_URL}/rag/index`, { method: "POST" });
       const data = await res.json();
       alert(data.status);
     } catch(e) {
@@ -34,7 +37,7 @@ export default function Chat() {
     setLoading(true);
     
     try {
-      const res = await fetch("http://localhost:8000/rag/ask", {
+      const res = await fetch(`${API_URL}/rag/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userMsg, project_id: activeProject?.id || null })

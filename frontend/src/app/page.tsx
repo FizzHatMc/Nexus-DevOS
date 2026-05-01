@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState, useEffect, Suspense } from "react";
 import { MarkdownEditor } from "@/components/editor/MarkdownEditor";
@@ -17,7 +20,7 @@ function EditorContent() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:8000/notes/${noteId}`)
+    fetch(`${API_URL}/notes/${noteId}`)
       .then((res) => {
         if (!res.ok) throw new Error("Not found");
         return res.json();
@@ -34,7 +37,7 @@ function EditorContent() {
 
   const handleSave = async (newContent: string) => {
     try {
-      await fetch("http://localhost:8000/notes/", {
+      await fetch(`${API_URL}/notes/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -55,7 +58,7 @@ function EditorContent() {
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${noteId}? This action cannot be undone.`)) {
       try {
-        const res = await fetch(`http://localhost:8000/notes/${noteId}`, {
+        const res = await fetch(`${API_URL}/notes/${noteId}`, {
           method: "DELETE",
         });
         if (res.ok) {

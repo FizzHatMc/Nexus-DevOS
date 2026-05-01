@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { GitCommit, Paperclip, Link as LinkIcon, AlertCircle, Upload, Trash2, Download } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -22,7 +25,7 @@ export function SidebarRight() {
   useEffect(() => {
     if (!repo || !repo.includes("/")) return;
     setLoadingGit(true);
-    fetch(`http://localhost:8000/git/${repo}/commits?limit=3`)
+    fetch(`${API_URL}/git/${repo}/commits?limit=3`)
       .then(res => {
         if (!res.ok) throw new Error("Failed");
         return res.json();
@@ -34,8 +37,8 @@ export function SidebarRight() {
 
   const fetchAssets = () => {
     const url = activeProject 
-      ? `http://localhost:8000/assets/?project_id=${activeProject.id}` 
-      : "http://localhost:8000/assets/";
+      ? `${API_URL}/assets/?project_id=${activeProject.id}` 
+      : `${API_URL}/assets/`;
     fetch(url)
       .then(res => res.json())
       .then(data => setAssets(data))
@@ -58,7 +61,7 @@ export function SidebarRight() {
 
     setUploading(true);
     try {
-      await fetch("http://localhost:8000/assets/", {
+      await fetch(`${API_URL}/assets/`, {
         method: "POST",
         body: formData,
       });
@@ -73,7 +76,7 @@ export function SidebarRight() {
 
   const handleDeleteAsset = async (id: number) => {
     if (!confirm("Delete this asset?")) return;
-    await fetch(`http://localhost:8000/assets/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/assets/${id}`, { method: "DELETE" });
     fetchAssets();
   };
 
@@ -115,7 +118,7 @@ export function SidebarRight() {
                 <div key={a.id} className="flex items-center justify-between text-xs bg-muted/20 p-2 rounded border border-border/50 group">
                   <span className="truncate flex-1" title={a.filename}>{a.filename}</span>
                   <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <a href={`http://localhost:8000/assets/${a.id}/download`} download className="text-muted-foreground hover:text-primary">
+                    <a href={`${API_URL}/assets/${a.id}/download`} download className="text-muted-foreground hover:text-primary">
                       <Download size={14} />
                     </a>
                     <button onClick={() => handleDeleteAsset(a.id)} className="text-muted-foreground hover:text-destructive">

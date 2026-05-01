@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
@@ -40,7 +43,7 @@ export function CommandPalette() {
     }
 
     const timer = setTimeout(() => {
-      let url = `http://localhost:8000/search/?q=${encodeURIComponent(query)}`;
+      let url = `${API_URL}/search/?q=${encodeURIComponent(query)}`;
       if (activeProject) {
         url += `&project_id=${activeProject.id}`;
       }

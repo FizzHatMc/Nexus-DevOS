@@ -1,4 +1,7 @@
+
 "use client";
+import { API_URL } from '@/lib/api';
+
 
 import { useState, useEffect } from "react";
 import { Globe, Plus, Trash2, ExternalLink, Activity } from "lucide-react";
@@ -22,8 +25,8 @@ export default function Services() {
 
   const fetchServices = () => {
     const url = activeProject 
-      ? `http://localhost:8000/services/?project_id=${activeProject.id}` 
-      : "http://localhost:8000/services/";
+      ? `${API_URL}/services/?project_id=${activeProject.id}` 
+      : `${API_URL}/services/`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -39,7 +42,7 @@ export default function Services() {
 
   const checkStatus = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/services/${id}/status`);
+      const res = await fetch(`${API_URL}/services/${id}/status`);
       const data = await res.json();
       setStatusMap(prev => ({ ...prev, [id]: data.status }));
     } catch(e) {
@@ -49,7 +52,7 @@ export default function Services() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:8000/services/", {
+    await fetch(`${API_URL}/services/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
@@ -66,7 +69,7 @@ export default function Services() {
   };
 
   const handleDelete = async (id: number) => {
-    await fetch(`http://localhost:8000/services/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/services/${id}`, { method: "DELETE" });
     fetchServices();
   };
 
